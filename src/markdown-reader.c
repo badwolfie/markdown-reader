@@ -192,7 +192,7 @@ static void markdown_reader_real_startup (GApplication* base) {
 	_tmp18_ = gtk_builder_new ();
 	builder = _tmp18_;
 	{
-		gtk_builder_add_from_file (builder, "data/menu.ui", &_inner_error_);
+		gtk_builder_add_from_resource (builder, "/com/github/badwolfie/markdown-reader/menu.ui", &_inner_error_);
 		if (G_UNLIKELY (_inner_error_ != NULL)) {
 			goto __catch1_g_error;
 		}
@@ -205,7 +205,7 @@ static void markdown_reader_real_startup (GApplication* base) {
 		e = _inner_error_;
 		_inner_error_ = NULL;
 		_tmp19_ = e->message;
-		g_error ("markdown-reader.vala:41: Error loading menu UI: %s", _tmp19_);
+		g_error ("markdown-reader.vala:40: Error loading menu UI: %s", _tmp19_);
 		_g_error_free0 (e);
 	}
 	__finally1:
