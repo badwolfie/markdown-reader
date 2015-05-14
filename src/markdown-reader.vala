@@ -34,9 +34,8 @@ public class MarkdownReader : Gtk.Application {
 		
 		var builder = new Gtk.Builder();
 		try {
-			// builder.add_from_resource(
-			//	"/com/github/badwolfie/markdown-reader/menu.ui");
-			builder.add_from_file("data/menu.ui");
+			builder.add_from_resource(
+				"/com/github/badwolfie/markdown-reader/menu.ui");
 		} catch (Error e) {
 			error("Error loading menu UI: %s",e.message);
 		}
