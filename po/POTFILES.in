@@ -1,0 +1,7 @@
+# List of source files containing translatable strings.
+# Please keep this file sorted alphabetically.
+[encoding: UTF-8]
+[type: gettext/glade]data/menu.ui
+data/markdown-reader.desktop.in
+src/main-window.vala
+src/markdown-reader.vala

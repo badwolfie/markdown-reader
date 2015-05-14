@@ -1,0 +1,11 @@
+[Desktop Entry]
+_Name=Markdown Reader
+_Comment=A document reader for markdown files
+_Keywords=document;reader;markdown;
+Exec=markdown-reader %U
+Terminal=false
+StartupNotify=true
+MimeType=text/plain;
+Icon=gnome-documents
+Type=Application
+Categories=GNOME;GTK;Utility;
