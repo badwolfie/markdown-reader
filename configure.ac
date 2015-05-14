@@ -21,8 +21,8 @@ AM_PROG_VALAC([0.24])
 AC_PROG_INSTALL
 IT_PROG_INTLTOOL([0.50.1])
 
-pkg_modules="gtk+-3.0 >= 3.10.0 webkit2gtk-4.0 >= 2.8.2 gee-0.8 >= 0.18.0"
-markdown_reader_PACKAGES="--pkg gtk+-3.0 --pkg webkit2gtk-4.0 --pkg gee-0.8 --pkg posix --target-glib 2.32"
+pkg_modules="gtk+-3.0 >= 3.10.0 webkit2gtk-4.0 >= 2.8.2"
+markdown_reader_PACKAGES="--pkg gtk+-3.0 --pkg webkit2gtk-4.0 --pkg posix --target-glib 2.32"
 PKG_CHECK_MODULES(markdown_reader, [$pkg_modules])
 AC_SUBST(markdown_reader_CFLAGS)
 AC_SUBST(markdown_reader_LIBS)

@@ -74,7 +74,7 @@ public class MarkdownReader : Gtk.Application {
 		// var translator_credits = _("translator-credits");
 
 		string license = 
-		"""Markdown Reader is free software: you can redistribute it and/or modify
+"""Markdown Reader is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
 the Free Software Foundation, either version 2 of the License, or
 (at your option) any later version.
@@ -102,7 +102,7 @@ along with Markdown Reader. If not, see <http://www.gnu.org/licenses/>.""";
 		about_dialog.documenters = authors;
 		about_dialog.authors = authors;
 		// about_dialog.translator_credits = translator_credits;
-		about_dialog.version = ("0.1");
+		about_dialog.version = ("1.0.0");
 
 		// about_dialog.add_credit_section(_("Contributors"),contributors);
 

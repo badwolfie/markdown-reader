@@ -323,7 +323,7 @@ static void markdown_reader_about_cb (MarkdownReader* self) {
 	gtk_about_dialog_set_logo_icon_name (about_dialog, "gnome-documents");
 	gtk_about_dialog_set_documenters (about_dialog, authors);
 	gtk_about_dialog_set_authors (about_dialog, authors);
-	gtk_about_dialog_set_version (about_dialog, "0.1");
+	gtk_about_dialog_set_version (about_dialog, "1.0.0");
 	gtk_dialog_run ((GtkDialog*) about_dialog);
 	gtk_widget_destroy ((GtkWidget*) about_dialog);
 	_g_object_unref0 (about_dialog);
