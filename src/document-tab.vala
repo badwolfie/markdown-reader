@@ -88,9 +88,9 @@ public class DocumentTab : Box {
 			return;
 		}
 		
-		string timestamp = new DateTime.now_utc().format("%F_%T");
 		string prefix = Environment.get_home_dir() + "/.markdown-reader/tmp";
-		string html_filename = "%s/tmp-%s.html".printf(prefix,timestamp);
+		string html_filename = "%s/%s.html".printf(
+			prefix,Path.get_basename(filename));
 		
 		string html_header = "<!DOCTYPE html><html><head>";
 		html_header += "<meta http-equiv=\"Content-Type\"";
