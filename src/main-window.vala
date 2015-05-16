@@ -25,7 +25,7 @@ public class MainWindow : ApplicationWindow {
 		Object(application: app);
 		opened_files = new List<string>();
 		
-		window_position = WindowPosition.CENTER_ALWAYS;
+		window_position = WindowPosition.CENTER;
 		set_default_size(700,600);
 		border_width = 0;
 		
