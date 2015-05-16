@@ -19,12 +19,14 @@ public class MarkdownReader : Gtk.Application {
 		base.startup();
 		
 		var conf_dir = File.new_for_path(home_dir + "/.markdown-reader");
-			
 		var tmp_dir = File.new_for_path(home_dir + "/.markdown-reader/tmp");
+		var recents = File.new_for_path(home_dir + "/.markdown-reader/recents");
 
 		try {
 			if (!conf_dir.query_exists()) conf_dir.make_directory();
 			if (!tmp_dir.query_exists()) tmp_dir.make_directory();
+			if (!recents.query_exists()) 
+				recents.create(FileCreateFlags.PRIVATE);
 		} catch (Error e) {
 			error("Error loading menu UI: %s",e.message);
 		}

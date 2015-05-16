@@ -124,8 +124,25 @@ public class MainWindow : ApplicationWindow {
 		box.pack_start(l3,false,true,0);
 		box.pack_start(hbox,false,true,15);
 		box.show_all();
+
+		string recents = null;
+
+		try {
+			FileUtils.get_contents(
+				Environment.get_home_dir() + "/.markdown-reader/recents", 
+				out recents);
+		} catch (Error e) {
+			stderr.printf("Error: %s\n", e.message);
+		}
+
+		if ((recents != null) && (recents != "")) {
+			var recent_files = recents.split("/,/");
+			/*foreach (string file in recent_files) {
+				if ((file != "") && File.new_for_path(file).query_exists())
+			}*/
+		}
 		
-		documents.add_named(box,"welcome"); 
+		documents.add_named(box,"welcome");
 	}
 	
 	private void open_file_cb() {
