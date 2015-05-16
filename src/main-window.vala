@@ -118,14 +118,12 @@ public class MainWindow : ApplicationWindow {
 		hbox.pack_start(l5,false,false,0);
 		hbox.halign = Align.CENTER;
 		
+		var l6 = new Label("<big><b> " + ("Recent files") + " </b></big>");
+		l6.use_markup = true;
+	
 		var box = new Box(Orientation.VERTICAL,0);
-		box.pack_start(l1,false,true,10);
-		box.pack_start(l2,false,true,0);
-		box.pack_start(l3,false,true,0);
-		box.pack_start(hbox,false,true,15);
-		box.show_all();
-
 		string recents = null;
+		RecentFileBox[] file_boxes = new RecentFileBox[6];
 
 		try {
 			FileUtils.get_contents(
@@ -135,12 +133,62 @@ public class MainWindow : ApplicationWindow {
 			stderr.printf("Error: %s\n", e.message);
 		}
 
+		Box recent_files_vbox = null;
 		if ((recents != null) && (recents != "")) {
-			var recent_files = recents.split("/,/");
-			/*foreach (string file in recent_files) {
-				if ((file != "") && File.new_for_path(file).query_exists())
-			}*/
+			recent_files_vbox = new Box(Orientation.VERTICAL,0);
+			var recent_files_hbox_1 = new Box(Orientation.HORIZONTAL,0);
+			recent_files_hbox_1.homogeneous = true;
+			var recent_files_hbox_2 = new Box(Orientation.HORIZONTAL,0);
+			recent_files_hbox_2.homogeneous = true; 
+			var recent_files = recents.split("\n");
+			
+			for (int i = 0; i < 6; i++) {
+				if (recent_files[i] == null) break;
+				
+				if ((recent_files[i] != "") &&  
+					 File.new_for_path(recent_files[i]).query_exists()) {
+					file_boxes[i] = new RecentFileBox(recent_files[i]);
+					file_boxes[i].recent_file_clicked.connect((filename) => {
+						add_new_tab_from_file(filename);
+					});
+				}
+			}
+			
+			if (file_boxes[0] != null)
+				recent_files_hbox_1.pack_start(file_boxes[0],false,true,10);
+			if (file_boxes[1] != null)
+				recent_files_hbox_1.pack_start(file_boxes[1],false,true,10);
+			if (file_boxes[2] != null)
+				recent_files_hbox_1.pack_start(file_boxes[2],false,true,10);
+			
+			if (file_boxes[3] != null)
+				recent_files_hbox_2.pack_start(file_boxes[3],false,true,10);
+			if (file_boxes[4] != null)
+				recent_files_hbox_2.pack_start(file_boxes[4],false,true,10);
+			if (file_boxes[5] != null)
+				recent_files_hbox_2.pack_start(file_boxes[5],false,true,10);
+			
+			recent_files_vbox.pack_start(recent_files_hbox_1,false,true,10);
+			recent_files_vbox.pack_start(recent_files_hbox_2,false,true,10);
+			recent_files_vbox.halign = Align.CENTER;
+			recent_files_vbox.show_all();
 		}
+		
+		box.pack_start(l1,false,true,10);
+		box.pack_start(l2,false,true,0);
+		box.pack_start(l3,false,true,0);
+		box.pack_start(hbox,false,true,20);
+		
+		var l = new Label("");
+		l.show();
+		
+		box.pack_start(l,false,true,5);
+		if (recent_files_vbox != null) {
+			box.pack_start(l6,false,true,0);
+			box.pack_start(recent_files_vbox,false,true,5);
+		}
+		
+		box.show_all();
 		
 		documents.add_named(box,"welcome");
 	}
@@ -169,6 +217,9 @@ public class MainWindow : ApplicationWindow {
 	
 	private void add_new_tab_from_file(string file_name) {
 		if (file_is_opened(file_name)) return;
+		
+		var welcome_page = documents.get_child_by_name("welcome");
+		welcome_page.destroy();
 		
 		if (!file_name.contains(".html") && !file_name.contains(".md")) {
 			var dialog = new Dialog.with_buttons(("Error"),this,
@@ -201,6 +252,26 @@ public class MainWindow : ApplicationWindow {
 		int page_num = tab_bar.get_page_num(current_page);
 
 		opened_files.insert(file_name,page_num);
+		string recents;
+		
+		try {
+			FileUtils.get_contents(
+				Environment.get_home_dir() + "/.markdown-reader/recents", 
+				out recents);
+		} catch (Error e) {
+			stderr.printf("Error: %s\n", e.message);
+		}
+		
+		if (!recents.contains(file_name))
+			recents = file_name + "\n" + recents;
+		
+		try {
+			FileUtils.set_contents(
+				Environment.get_home_dir() + "/.markdown-reader/recents", 
+				recents);
+		} catch (Error e) {
+			stderr.printf ("Error: %s\n", e.message);
+		}
 	}
 	
 	private bool file_is_opened(string needle) {
@@ -218,9 +289,10 @@ public class MainWindow : ApplicationWindow {
 		tab.tab_widget.destroy();
 		tab.destroy();
 
-		if (tab_bar.tab_num == 0)
+		if (tab_bar.tab_num == 0) {
 			separator.hide();
-		else
+			welcome_msg();
+		} else
 			tab_bar.get_current_page(documents.visible_child).mark_title();
 	}
 	

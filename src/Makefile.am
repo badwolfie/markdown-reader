@@ -16,6 +16,7 @@ markdown_reader_SOURCES = \
 	document-tab.vala \
 	main-window.vala \
 	markdown-reader.vala \
+	recent-file-box.vala \
 	tab-bar.vala \
 	$(BUILT_SOURCES)
 

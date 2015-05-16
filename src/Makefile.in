@@ -103,6 +103,7 @@ am__objects_1 = markdown_reader-resources.$(OBJEXT)
 am_markdown_reader_OBJECTS = markdown_reader-document-tab.$(OBJEXT) \
 	markdown_reader-main-window.$(OBJEXT) \
 	markdown_reader-markdown-reader.$(OBJEXT) \
+	markdown_reader-recent-file-box.$(OBJEXT) \
 	markdown_reader-tab-bar.$(OBJEXT) $(am__objects_1)
 markdown_reader_OBJECTS = $(am_markdown_reader_OBJECTS)
 am__DEPENDENCIES_1 =
@@ -174,7 +175,8 @@ ETAGS = etags
 CTAGS = ctags
 am__DIST_COMMON = $(srcdir)/Makefile.in \
 	$(srcdir)/markdown_reader_vala.stamp $(top_srcdir)/depcomp \
-	document-tab.c main-window.c markdown-reader.c tab-bar.c
+	document-tab.c main-window.c markdown-reader.c \
+	recent-file-box.c tab-bar.c
 DISTFILES = $(DIST_COMMON) $(DIST_SOURCES) $(TEXINFOS) $(EXTRA_DIST)
 ACLOCAL = @ACLOCAL@
 ALL_LINGUAS = @ALL_LINGUAS@
@@ -313,6 +315,7 @@ markdown_reader_SOURCES = \
 	document-tab.vala \
 	main-window.vala \
 	markdown-reader.vala \
+	recent-file-box.vala \
 	tab-bar.vala \
 	$(BUILT_SOURCES)
 
@@ -413,6 +416,7 @@ distclean-compile:
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-document-tab.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-main-window.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-markdown-reader.Po@am__quote@
+@AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-recent-file-box.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-resources.Po@am__quote@
 @AMDEP_TRUE@@am__include@ @am__quote@./$(DEPDIR)/markdown_reader-tab-bar.Po@am__quote@
 
@@ -472,6 +476,20 @@ markdown_reader-markdown-reader.obj: markdown-reader.c
 @AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
 @am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -c -o markdown_reader-markdown-reader.obj `if test -f 'markdown-reader.c'; then $(CYGPATH_W) 'markdown-reader.c'; else $(CYGPATH_W) '$(srcdir)/markdown-reader.c'; fi`
 
+markdown_reader-recent-file-box.o: recent-file-box.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -MT markdown_reader-recent-file-box.o -MD -MP -MF $(DEPDIR)/markdown_reader-recent-file-box.Tpo -c -o markdown_reader-recent-file-box.o `test -f 'recent-file-box.c' || echo '$(srcdir)/'`recent-file-box.c
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/markdown_reader-recent-file-box.Tpo $(DEPDIR)/markdown_reader-recent-file-box.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recent-file-box.c' object='markdown_reader-recent-file-box.o' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -c -o markdown_reader-recent-file-box.o `test -f 'recent-file-box.c' || echo '$(srcdir)/'`recent-file-box.c
+
+markdown_reader-recent-file-box.obj: recent-file-box.c
+@am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -MT markdown_reader-recent-file-box.obj -MD -MP -MF $(DEPDIR)/markdown_reader-recent-file-box.Tpo -c -o markdown_reader-recent-file-box.obj `if test -f 'recent-file-box.c'; then $(CYGPATH_W) 'recent-file-box.c'; else $(CYGPATH_W) '$(srcdir)/recent-file-box.c'; fi`
+@am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/markdown_reader-recent-file-box.Tpo $(DEPDIR)/markdown_reader-recent-file-box.Po
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	$(AM_V_CC)source='recent-file-box.c' object='markdown_reader-recent-file-box.obj' libtool=no @AMDEPBACKSLASH@
+@AMDEP_TRUE@@am__fastdepCC_FALSE@	DEPDIR=$(DEPDIR) $(CCDEPMODE) $(depcomp) @AMDEPBACKSLASH@
+@am__fastdepCC_FALSE@	$(AM_V_CC@am__nodep@)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -c -o markdown_reader-recent-file-box.obj `if test -f 'recent-file-box.c'; then $(CYGPATH_W) 'recent-file-box.c'; else $(CYGPATH_W) '$(srcdir)/recent-file-box.c'; fi`
+
 markdown_reader-tab-bar.o: tab-bar.c
 @am__fastdepCC_TRUE@	$(AM_V_CC)$(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(AM_CPPFLAGS) $(CPPFLAGS) $(markdown_reader_CFLAGS) $(CFLAGS) -MT markdown_reader-tab-bar.o -MD -MP -MF $(DEPDIR)/markdown_reader-tab-bar.Tpo -c -o markdown_reader-tab-bar.o `test -f 'tab-bar.c' || echo '$(srcdir)/'`tab-bar.c
 @am__fastdepCC_TRUE@	$(AM_V_at)$(am__mv) $(DEPDIR)/markdown_reader-tab-bar.Tpo $(DEPDIR)/markdown_reader-tab-bar.Po
@@ -514,14 +532,19 @@ $(srcdir)/markdown-reader.c: $(srcdir)/markdown_reader_vala.stamp
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/markdown_reader_vala.stamp; \
 	fi
+$(srcdir)/recent-file-box.c: $(srcdir)/markdown_reader_vala.stamp
+	@if test -f $@; then :; else rm -f $(srcdir)/markdown_reader_vala.stamp; fi
+	@if test -f $@; then :; else \
+	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/markdown_reader_vala.stamp; \
+	fi
 $(srcdir)/tab-bar.c: $(srcdir)/markdown_reader_vala.stamp
 	@if test -f $@; then :; else rm -f $(srcdir)/markdown_reader_vala.stamp; fi
 	@if test -f $@; then :; else \
 	  $(MAKE) $(AM_MAKEFLAGS) $(srcdir)/markdown_reader_vala.stamp; \
 	fi
-$(srcdir)/markdown_reader_vala.stamp: document-tab.vala main-window.vala markdown-reader.vala tab-bar.vala
+$(srcdir)/markdown_reader_vala.stamp: document-tab.vala main-window.vala markdown-reader.vala recent-file-box.vala tab-bar.vala
 	$(AM_V_at)rm -f $@ && echo stamp > $@-t
-	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(markdown_reader_VALAFLAGS) $(VALAFLAGS) -C document-tab.vala main-window.vala markdown-reader.vala tab-bar.vala
+	$(AM_V_VALAC)$(am__cd) $(srcdir) && $(VALAC) $(markdown_reader_VALAFLAGS) $(VALAFLAGS) -C document-tab.vala main-window.vala markdown-reader.vala recent-file-box.vala tab-bar.vala
 	$(AM_V_at)mv -f $@-t $@
 
 ID: $(am__tagged_files)
@@ -649,10 +672,12 @@ maintainer-clean-generic:
 	-rm -f $(srcdir)/main-window.c
 	-rm -f $(srcdir)/markdown-reader.c
 	-rm -f $(srcdir)/markdown_reader_vala.stamp
+	-rm -f $(srcdir)/recent-file-box.c
 	-rm -f $(srcdir)/tab-bar.c
 	-rm -f document-tab.c
 	-rm -f main-window.c
 	-rm -f markdown-reader.c
+	-rm -f recent-file-box.c
 	-rm -f tab-bar.c
 	-test -z "$(BUILT_SOURCES)" || rm -f $(BUILT_SOURCES)
 clean: clean-am
