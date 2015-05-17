@@ -97,10 +97,10 @@ public class DocumentTab : Box {
 		html_header += "content=\"text/html; charset=UTF-8\">";
 		html_header += "</head><body>";
 		
-		Posix.system("echo '" + html_header + "' > " + html_filename);
+		Posix.system("echo '" + html_header + "' > \"" + html_filename + "\"");
 		Posix.system(
-			"markdown_py \"" + filename + "\" >> " + html_filename);
-		Posix.system("echo '</body></html>' >> " + html_filename);
+			"markdown_py \"" + filename + "\" >> \"" + html_filename + "\"");
+		Posix.system("echo '</body></html>' >> \"" + html_filename + "\"");
 		
 		_web_view.load_uri("file://" + html_filename);
 	}
