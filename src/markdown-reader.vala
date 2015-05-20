@@ -1,8 +1,18 @@
 using Gtk;
 
 public class MarkdownReader : Gtk.Application {
+	private const string APP_NAME = "Markdown Reader";
+	private const string APP_VERSION = "1.1.0";
+
 	private string home_dir = Environment.get_home_dir();
 	private MainWindow window;
+
+	private const OptionEntry[] option_entries = {
+		{ "version", 'v', 0, 
+		  OptionArg.NONE, null, 
+		  ("Show release version"), null },
+		{ null }
+	};
 	
 	private const GLib.ActionEntry[] app_entries = {
 		{ "about", about_cb, null, null, null },
@@ -11,8 +21,8 @@ public class MarkdownReader : Gtk.Application {
 	
 	public MarkdownReader() {
 		Object(application_id: "badwolfie.markdown-reader.app",
-			   flags: ApplicationFlags.HANDLES_OPEN
-		);
+			   flags: ApplicationFlags.HANDLES_OPEN);
+		add_main_option_entries(option_entries);
 	}
 	
 	protected override void startup() {
@@ -64,6 +74,15 @@ public class MarkdownReader : Gtk.Application {
 		Posix.system(
 			"rm -f " + home_dir + "/.markdown-reader/tmp/*");
 	}
+
+	protected override int handle_local_options(VariantDict options) {
+		if (options.contains("version")) {
+			stderr.printf("%1$s %2$s\n", APP_NAME, APP_VERSION);
+			return Posix.EXIT_SUCCESS;
+		}
+
+		return -1;
+	}
 	
 	private void about_cb() {
 		const string[] authors = { 
@@ -91,7 +110,7 @@ along with Markdown Reader. If not, see <http://www.gnu.org/licenses/>.""";
 		var about_dialog = new AboutDialog();
 		about_dialog.set_transient_for(window);
 
-        about_dialog.program_name = ("Markdown Reader");
+        about_dialog.program_name = (APP_NAME);
 		about_dialog.title = ("About") + " Markdown Reader";
 		about_dialog.copyright = ("Copyright \xc2\xa9 2015 Ian Hernández");
 		about_dialog.comments = 
@@ -100,10 +119,9 @@ along with Markdown Reader. If not, see <http://www.gnu.org/licenses/>.""";
 		about_dialog.website_label = ("Web page");
 		about_dialog.license = license;
 		about_dialog.logo_icon_name = ("gnome-documents");
-		about_dialog.documenters = authors;
 		about_dialog.authors = authors;
 		// about_dialog.translator_credits = translator_credits;
-		about_dialog.version = ("1.0.0");
+		about_dialog.version = (APP_VERSION);
 
 		// about_dialog.add_credit_section(_("Contributors"),contributors);
 

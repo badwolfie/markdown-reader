@@ -234,6 +234,9 @@ public class MainWindow : ApplicationWindow {
 			
 			dialog.run();
 			dialog.destroy();
+
+			if (tab_bar.tab_num == 0)
+				welcome_msg();
 			return;
 		}
 		
