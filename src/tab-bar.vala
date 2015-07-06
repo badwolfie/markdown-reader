@@ -11,6 +11,7 @@ public class TabBar : Box {
 	private Box extra_box;
 	private EventBox extra_menu;
 	private Popover extra_popup;
+	private Label extra_label;
 
 	private List<DocumentTab> _extra_tabs;
 	public List<DocumentTab> extra_tabs {
@@ -35,11 +36,18 @@ public class TabBar : Box {
 		
 		extra_box = new Box(Orientation.VERTICAL,0);
 		var extra_menu_img = new Image.from_icon_name(
-			"view-more-symbolic",IconSize.MENU);
+			"view-list-symbolic",IconSize.MENU);
 
+		extra_label = new Label("");
+		extra_label.use_markup = true;
+		
 		extra_menu = new EventBox();
-		extra_menu.child = extra_menu_img;
 		extra_menu.set_above_child(true);
+
+		var box = new Box(Orientation.HORIZONTAL, 3);
+		box.pack_start(extra_menu_img, true, true, 0);
+		box.pack_start(extra_label, true, true, 0);
+		extra_menu.child = box;
 
 		extra_menu.button_press_event.connect((event) => {
 			if (extra_popup.get_visible())
@@ -74,22 +82,38 @@ public class TabBar : Box {
 			extra_box.pack_start(tab,false,true,7);
 			_extra_tabs.append(tab);
 			tab_extra_num++;
+			
+			extra_menu.set_tooltip_text(
+				_("Hidden tabs: %d").printf(tab_extra_num));
+				
+			int label_timeout = 0;
+			GLib.Timeout.add(250, () => {
+				switch (label_timeout) {
+					case 0:
+						extra_label.label = "<b>+1 </b>";
+						break;
+					case 1:
+						extra_label.label = "<b>%d </b>".printf(tab_extra_num);
+						return false;
+				}
+			
+				label_timeout++;
+				return true;
+			});
 		}
 		
 		tab.close_clicked.connect(close_page);
 		tab.tab_clicked.connect(switch_page);
 
-		if (new_page) switch_page(tab);
+		if (new_page) switch_page(tab, new_page);
 	}
 
-	public void switch_page(DocumentTab tab) {
-		if (_extra_tabs.index(tab) != -1)
+	public void switch_page(DocumentTab tab, bool new_page) {
+		if ((_extra_tabs.index(tab) != -1) && !new_page)
 			extra_popup.show_all();
 		else
 			extra_popup.hide();
-
-		if (tab.tab_widget == null)
-			stdout.printf("PUTO ERROR!\n");
+			
 		stack.set_visible_child(tab.tab_widget);
 		refresh_marked();
 		tab.mark_title();
@@ -116,46 +140,46 @@ public class TabBar : Box {
 		return current_tab;
 	}
 
-	public void switch_page_next(DocumentTab current_tab) {
+	public void switch_page_next(DocumentTab current_tab, bool new_page) {
 		if (_tabs.index(current_tab) != -1) {
 			if (current_tab == _tabs.last().data) {
 				if (tab_extra_num > 0)
-					switch_page(_extra_tabs.first().data);
+					switch_page(_extra_tabs.first().data, new_page);
 				else
-					switch_page(_tabs.first().data);
+					switch_page(_tabs.first().data, new_page);
 			} else {
 				var tab = _tabs.nth_data(_tabs.index(current_tab) + 1);
-				switch_page(tab);
+				switch_page(tab, new_page);
 			}
 		} else if (_extra_tabs.index(current_tab) != -1) {
 			if (current_tab == _extra_tabs.last().data)
-				switch_page(_tabs.first().data);
+				switch_page(_tabs.first().data, new_page);
 			else {
 				var tab = _extra_tabs.nth_data(
 					_extra_tabs.index(current_tab) + 1);
-				switch_page(tab);
+				switch_page(tab, new_page);
 			}
 		}
 	}
 
-	public void switch_page_prev(DocumentTab current_tab) {
+	public void switch_page_prev(DocumentTab current_tab, bool new_page) {
 		if (_tabs.index(current_tab) != -1) {
 			if (current_tab == _tabs.first().data) {
 				if (tab_extra_num > 0)
-					switch_page(_extra_tabs.last().data);
+					switch_page(_extra_tabs.last().data, new_page);
 				else
-					switch_page(_tabs.last().data);
+					switch_page(_tabs.last().data, new_page);
 			} else {
 				var tab = _tabs.nth_data(_tabs.index(current_tab) - 1);
-				switch_page(tab);
+				switch_page(tab, new_page);
 			}
 		} else if (_extra_tabs.index(current_tab) != -1) {
 			if (current_tab == _extra_tabs.first().data)
-				switch_page(_tabs.last().data);
+				switch_page(_tabs.last().data, new_page);
 			else {
 				var tab = _extra_tabs.nth_data(
 					_extra_tabs.index(current_tab) - 1);
-				switch_page(tab);
+				switch_page(tab, new_page);
 			}
 		}
 	}
@@ -179,6 +203,24 @@ public class TabBar : Box {
 			} else if (_extra_tabs.index(tab) != -1) {
 				_extra_tabs.remove(tab);
 				tab_extra_num--;
+				
+				extra_menu.set_tooltip_text(
+					_("Hidden tabs: %d").printf(tab_extra_num));
+			
+				int label_timeout = 0;
+				GLib.Timeout.add(250, () => {
+					switch (label_timeout) {
+						case 0:
+							extra_label.label = "<b>-1 </b>";
+							break;
+						case 1:
+							extra_label.label = "<b>%d </b>".printf(tab_extra_num);
+							return false;
+					}
+				
+					label_timeout++;
+					return true;
+				});
 			}
 		}
 

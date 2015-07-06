@@ -1,0 +1,36 @@
+<Project xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
+         xmlns:rdfs="http://www.w3.org/2000/01/rdf-schema#"
+         xmlns:foaf="http://xmlns.com/foaf/0.1/"
+         xmlns="http://usefulinc.com/ns/doap#">
+    <name xml:lang="en">Markdown Reader</name>
+    <shortdesc xml:lang="en">A document reader for markdown and html files.</shortdesc>
+    <description>Markdown Reader is a document reader written in the Vala programming language with a tab system implemented by myself using a GTKStack to show the current document and store all the opened ones.
+    It simply takes a markdown file (.md), process it using John Gruber's Markdown into an HTML file (.html) and then shows it in a WebkitWebView for easy reading. It can also open HTML files directly.
+
+    The source code for Markdown Reader is available for anyone who whishes to build its package and try it. If your interested in building Markdown Reader from source simply download it and use the building script we provide at:
+
+    	https://github.com/BadWolfie/markdown-reader
+
+    Apart from being able to build Markdown Reader from the source code it's currently available as an AUR package for ArchLinux and we are working to port it to other Linux distributions such as Debian and Fedora.</description>
+    <homepage rdf:resource="https://github.com/BadWolfie" />
+    <download-page rdf:resource="https://github.com/BadWolfie/markdown-reader/releases" />
+    <bug-database rdf:resource="https://github.com/BadWolfie/markdown-reader/issues" />
+    <screenshots rdf:resource="https://github.com/BadWolfie/markdown-reader/tree/master/screenshots" />
+    <license rdf:resource="http://spdx.org/licenses/GPL-2.0+" />
+
+    <programming-language>Vala</programming-language>
+
+    <maintainer>
+    	<foaf:Person>
+    		<foaf:name>Ian Hernandez</foaf:name>
+    	</foaf:Person>
+    </maintainer>
+
+    <release>
+        <Version>
+            <foaf:name>Stable</foaf:name>
+            <created>2015-05-16</created>
+            <revision>1.1.0</revision>
+        </Version>
+    </release>
+</Project>

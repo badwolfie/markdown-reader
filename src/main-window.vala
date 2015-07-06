@@ -288,15 +288,18 @@ public class MainWindow : ApplicationWindow {
 	private void on_page_close(DocumentTab? tab, int page_num) {
 		opened_files.remove(opened_files.nth_data(page_num));
 		
-		tab_bar.switch_page_next(tab);
+		tab_bar.switch_page_next(tab, false);
 		tab.tab_widget.destroy();
 		tab.destroy();
 
 		if (tab_bar.tab_num == 0) {
 			separator.hide();
 			welcome_msg();
-		} else
-			tab_bar.get_current_page(documents.visible_child).mark_title();
+		} else {
+			var current_doc = tab_bar.get_current_page(documents.visible_child);
+			tab_bar.switch_page(current_doc, false);
+			current_doc.mark_title();
+		}
 	}
 	
 	private void page_refresh_cb() {
@@ -309,12 +312,12 @@ public class MainWindow : ApplicationWindow {
 	private void next_tab_cb() {
 		var current_page = tab_bar.get_current_page(documents.visible_child);
 		if (current_page != null) 
-			tab_bar.switch_page_next(current_page);
+			tab_bar.switch_page_next(current_page, false);
 	}
 
 	private void prev_tab_cb() {
 		var current_page = tab_bar.get_current_page(documents.visible_child);
 		if (current_page != null) 
-			tab_bar.switch_page_prev(current_page);
+			tab_bar.switch_page_prev(current_page, false);
 	}
 }

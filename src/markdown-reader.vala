@@ -2,7 +2,7 @@ using Gtk;
 
 public class MarkdownReader : Gtk.Application {
 	private const string APP_NAME = "Markdown Reader";
-	private const string APP_VERSION = "1.1.0";
+	private const string APP_VERSION = "1.1.1";
 
 	private string home_dir = Environment.get_home_dir();
 	private MainWindow window;

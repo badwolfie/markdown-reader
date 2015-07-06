@@ -5,7 +5,7 @@ public class DocumentTab : Box {
 	// public signal void view_drag_n_drop(string file_name);
 
 	public signal void close_clicked (DocumentTab tab);
-	public signal void tab_clicked (DocumentTab tab);
+	public signal void tab_clicked (DocumentTab tab, bool new_page);
 	public signal void tab_focused (DocumentTab tab);
 
 	private WebView _web_view;
@@ -16,7 +16,6 @@ public class DocumentTab : Box {
 	private EventBox evt_box;
 	private Label title_label;
 	private EventBox close_button;
-	private Separator separator;
 	private string filename;
 
 	private ScrolledWindow _tab_widget;
@@ -40,6 +39,7 @@ public class DocumentTab : Box {
 		Object();
 		tab_title = base_name;
 		filename = file_path;
+		width_request = 150;
 		create_widgets();
 	}
 
@@ -48,9 +48,12 @@ public class DocumentTab : Box {
 		spacing = 0;
 		
 		title_label = new Label(tab_title);
-		separator = new Separator(Orientation.VERTICAL);
 		var close_img = new Image.from_icon_name("window-close-symbolic",
-												 IconSize.MENU);
+			IconSize.MENU);
+		title_label.ellipsize = Pango.EllipsizeMode.END;
+		title_label.max_width_chars = 10;
+		title_label.width_chars = 10;
+		
 		close_button = new EventBox();
 		close_button.child = close_img;
 		close_button.set_above_child(true);
@@ -62,8 +65,7 @@ public class DocumentTab : Box {
 		evt_box.button_press_event.connect(tab_clicked_action);
 
 		pack_start(evt_box,true,true,0);
-		pack_start(close_button,false,true,5);
-		pack_start(separator,false,true,0);
+		pack_start(close_button,false,true,0);
 
 		_web_view = new WebView();
 		// _web_view.drag_n_drop.connect(on_drag_n_drop);
@@ -118,13 +120,13 @@ public class DocumentTab : Box {
 	}
 
 	private bool tab_clicked_action(Gdk.EventButton evt) {
-		this.tab_clicked(this);
+		this.tab_clicked(this, false);
 		mark_title();
 		return true;
 	}
 
 	public void mark_title() {
 		title_label.use_markup = true;
-		title_label.label = "<b>" + tab_title + "</b>";
+		title_label.label = "<b><u>" + tab_title + "</u></b>";
 	}
 }
